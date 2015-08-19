@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Multiselect_Example;assembly=Multiselect_Example"
+             x:Class="Multiselect_Example.SamplePage"
+             Title="{Binding Title}">
+  <StackLayout>
+
+    <Button Text="DELETE" Command="{Binding DeleteSelectedCommand}" />
+    
+    <ListView
+      ItemsSource="{Binding Items}"
+      x:Name="_lvMulstiselectSample">
+
+      <ListView.ItemTemplate>
+        <DataTemplate>
+
+          <local:CustomSelectableCell
+            Text="{Binding Text}"
+            IsSelected="{Binding IsSelected}" />
+
+        </DataTemplate>
+      </ListView.ItemTemplate>
+
+    </ListView>
+  </StackLayout>
+</ContentPage>
