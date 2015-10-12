@@ -34,6 +34,28 @@ namespace Multiselect_Example
                 }
             }
         }
+        /// <summary>
+        /// Switch of <c>AutoSelect</c> on the <c>CustomSelectableCell</c> and bind this Command on the cell to use single selection
+        /// Command="{Binding Source={x:Reference _contentPage}, Path=BindingContext.CellTappedCommand}"
+        /// AutoSelect="False"
+        /// </summary>
+        public Command CellTappedCommand
+        {
+            get
+            {
+                return new Command<CustomSelectableCell>(cell => 
+                {
+                    var item = (SampleListviewItem)cell.BindingContext;
+                    var selectedItem = this._items.SingleOrDefault(i => i.IsSelected);
+
+                    if (selectedItem != null && !selectedItem.Equals(item))
+                    {
+                        selectedItem.IsSelected = false;
+                    }
+                    item.IsSelected = !item.IsSelected;
+                });
+            }
+        }
         public Command DeleteSelectedCommand
         {
             get

@@ -19,6 +19,42 @@ namespace Multiselect_Example
         /// <summary>
         /// The BindableProperty
         /// </summary>
+        public static readonly BindableProperty CommandProperty = BindableProperty.Create<CustomSelectableCell, Command>(i => i.Command, default(Command));
+        /// <summary>
+        /// Gets/Sets the command which gets executed on tapped
+        /// </summary>
+        public Command Command
+        {
+            get
+            {
+                return (Command)this.GetValue(CommandProperty);
+            }
+            set
+            {
+                this.SetValue(CommandProperty, value);
+            }
+        }
+        /// <summary>
+        /// Then BindableProperty
+        /// </summary>
+        public static readonly BindableProperty AutoSelectProperty = BindableProperty.Create<CustomSelectableCell, bool>(i => i.AutoSelect, true, BindingMode.TwoWay);
+        /// <summary>
+        /// Gets/Sets if the cell will automatically select the itself by tapping
+        /// </summary>
+        public bool AutoSelect
+        {
+            get
+            {
+                return (bool)this.GetValue(AutoSelectProperty);
+            }
+            set
+            {
+                this.SetValue(AutoSelectProperty, value);
+            }
+        }
+        /// <summary>
+        /// The BindableProperty
+        /// </summary>
         public static readonly BindableProperty IsSelectedProperty = BindableProperty.Create<CustomSelectableCell, bool>(i => i.IsSelected, default(bool), BindingMode.TwoWay, null, IsSelectedChanged);
         /// <summary>
         /// Gets/Sets if the cell is in selected state or not
@@ -132,7 +168,17 @@ namespace Multiselect_Example
         {
             base.OnTapped();
 
-            this.IsSelected = !this.IsSelected;
+            if (this.AutoSelect)
+            {
+                this.IsSelected = !this.IsSelected;
+            }
+            if (this.Command != null)
+            {
+                if (this.Command.CanExecute(this))
+                {
+                    this.Command.Execute(this);
+                }
+            }
         }
     }
 }

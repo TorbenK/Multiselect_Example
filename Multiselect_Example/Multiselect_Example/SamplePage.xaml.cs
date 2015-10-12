@@ -17,6 +17,7 @@ namespace Multiselect_Example
             this.BindingContext = new SampleViewModel();
 
             this._lvMulstiselectSample.ItemSelected += (o, e) => { this._lvMulstiselectSample.SelectedItem = null; };
+
         }
     }
 }
